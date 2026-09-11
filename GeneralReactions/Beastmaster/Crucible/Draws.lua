@@ -1070,6 +1070,86 @@ local tbl =
 			uuid = "8048292d-06be-7aa0-b1ce-c8f7989f85b9",
 			version = 2,
 		},
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "",
+			name = "Borgny the Venomous",
+			uuid = "7f2c9e18-4a6b-4d3f-8c1e-b9d047e5a263",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "Borgny the Venomous",
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local drawer = TensorCore.getMoogleFlatDrawer()\nlocal caster = TensorCore.mGetEntity(eventArgs.entityID)\n\nif caster ~= nil and caster.pos ~= nil then\n    local heading = caster.pos.h\n    local jumpDistance = 20\n\n    -- Predict the landing position behind the caster.\n    local landingX = caster.pos.x - math.sin(heading) * jumpDistance\n    local landingZ = caster.pos.z - math.cos(heading) * jumpDistance\n\n    drawer:addTimedCone(\n        8000,\n        landingX,\n        caster.pos.y,\n        landingZ,\n        30,\n        2 * math.pi / 3,\n        heading,\n        0,\n        false,\n        true\n    )\n\n    self.used = true\nend",
+						conditions = 
+						{
+							
+							{
+								"be136f68-5aa3-6937-afd9-2e29987cc365",
+								true,
+							},
+							
+							{
+								"5efd16b4-0877-dff8-98c4-5f190fcea495",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Draw Toxic Breath Wall Cone",
+						uuid = "445b58f2-1568-8724-9a89-45aad6f67adf",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14628,
+						name = "Borgny",
+						uuid = "be136f68-5aa3-6937-afd9-2e29987cc365",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 48807,
+						name = "Toxic Breath",
+						uuid = "5efd16b4-0877-dff8-98c4-5f190fcea495",
+						version = 3,
+					},
+				},
+			},
+			eventType = 3,
+			name = "Toxic Breath Wall Cone",
+			throttleTime = 5000,
+			timeout = 15,
+			uuid = "3120534a-06d8-2747-a254-9b2c84ce978c",
+			version = 2,
+		},
 	}, 
 	inheritedProfiles = 
 	{
