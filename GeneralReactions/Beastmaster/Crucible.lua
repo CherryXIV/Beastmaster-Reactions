@@ -4,6 +4,17 @@ local tbl =
 	{
 		data = 
 		{
+			displayPath = "",
+			name = "Draws",
+			uuid = "5e9a2c7f-1b4d-48e6-a3c0-9f7d2e5b8a14",
+		},
+		inheritanceRoot = "Beastmaster\\Crucible\\Draws",
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
 			actions = 
 			{
 				
@@ -173,6 +184,7 @@ local tbl =
 	}, 
 	inheritedProfiles = 
 	{
+		"Beastmaster\\Crucible\\Draws",
 	},
 }
 
