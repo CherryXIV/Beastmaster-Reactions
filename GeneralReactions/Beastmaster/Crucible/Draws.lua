@@ -14,7 +14,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Ogre Piece",
 			actions = 
 			{
 				
@@ -71,6 +70,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Ogre Piece",
 			eventType = 5,
 			name = "Ball of Fire Tether Circle",
 			timeout = 30,
@@ -82,7 +82,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Ogre Piece",
 			actions = 
 			{
 				
@@ -127,6 +126,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Ogre Piece",
 			eventType = 3,
 			name = "Scorching Smite AOE",
 			timeout = 12,
@@ -138,7 +138,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Ogre Piece",
 			actions = 
 			{
 				
@@ -197,6 +196,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Ogre Piece",
 			eventType = 5,
 			name = "Wisp Piece Circles",
 			timeout = 60,
@@ -218,7 +218,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Banemite Piece",
 			actions = 
 			{
 				
@@ -312,6 +311,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Banemite Piece",
 			eventType = 3,
 			name = "Deadly Thrust - Snarl then Challenge",
 			timeout = 12,
@@ -333,7 +333,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Arch Demon Piece",
 			actions = 
 			{
 				
@@ -376,6 +375,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Arch Demon Piece",
 			eventType = 3,
 			name = "Abyssal Transfixion Sword Circles",
 			uuid = "19c08d88-4229-78db-99eb-55a02a187971",
@@ -386,7 +386,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Arch Demon Piece",
 			actions = 
 			{
 				
@@ -429,6 +428,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Arch Demon Piece",
 			eventType = 3,
 			name = "Abyssal Transfixion Follow-up Sword Circles",
 			timeout = 25,
@@ -450,7 +450,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Bone Knights",
 			actions = 
 			{
 				
@@ -489,6 +488,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Bone Knights",
 			eventType = 3,
 			name = "Death Spiral Draw",
 			uuid = "2c309964-c519-5bbe-81d7-f19a63dd9872",
@@ -499,7 +499,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Bone Knights",
 			actions = 
 			{
 				
@@ -540,6 +539,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Bone Knights",
 			eventType = 3,
 			name = "Tumulus Draw",
 			uuid = "81bd3063-2396-2415-97a6-45b321e4ae12",
@@ -550,7 +550,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Bone Knights",
 			actions = 
 			{
 				
@@ -592,6 +591,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Bone Knights",
 			eventType = 3,
 			name = "Black Eruption Draw",
 			timeout = 6,
@@ -603,7 +603,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Bone Knights",
 			actions = 
 			{
 				
@@ -645,6 +644,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Bone Knights",
 			eventType = 3,
 			name = "Forward Guard - Snarl",
 			timeout = 10,
@@ -656,7 +656,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Bone Knights",
 			actions = 
 			{
 				
@@ -710,6 +709,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Bone Knights",
 			eventType = 8,
 			name = "Directional Parry Removed - Challenge",
 			timeout = 30,
@@ -731,7 +731,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Deadly Demesne",
 			actions = 
 			{
 				
@@ -771,6 +770,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Deadly Demesne",
 			eventType = 29,
 			name = "Deadly Demesne - Raised Safe Area",
 			uuid = "6cd5d7b6-b7fa-9085-af9f-720a1723a49e",
@@ -791,7 +791,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Minotaur Piece",
 			actions = 
 			{
 				
@@ -799,17 +798,27 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local caster = TensorCore.mGetEntity(eventArgs.entityID)\nif caster == nil or caster.pos == nil then\n    self.used = true\n    return\nend\n\nlocal width = eventArgs.aoeWidth\nif width == 0 then\n    width = 8\nend\n\nlocal length = eventArgs.aoeLength\nif length == nil or length <= 0 then\n    length = 25\nend\n\nlocal heading = eventArgs.heading\nif heading == nil then\n    heading = caster.pos.h\nend\n\nlocal drawer = TensorCore.getMoogleFlatDrawer()\ndrawer:addTimedRect(8000, caster.pos.x, caster.pos.y, caster.pos.z, length, width, heading, 0, false, true)\nself.used = true",
+						actionLua = "local old = data.bst_hammer_order\nif old and old.uuid then Argus.deleteTimedShape(old.uuid) end\ndata.bst_hammer_order = {\n    started = Now(),\n    seen = {},\n    count = 0,\n    dashCount = 0,\n    dashSeen = {},\n    bossID = eventArgs.entityID\n}\nself.used = true",
 						conditions = 
 						{
 							
 							{
-								"6727f973-e84b-217a-98ff-4934ccf29d67",
+								"f0c26b34-4f5d-30d2-901f-3fdd837c8ff0",
+								true,
+							},
+							
+							{
+								"5cf13e2e-7ae0-cac4-9406-9e2e8f7cd96a",
+								true,
+							},
+							
+							{
+								"4219a040-09cc-63cc-b9d1-1bd5ed1f6541",
 								true,
 							},
 						},
-						name = "Draw - Wild Charge lane",
-						uuid = "2eab3ff8-698b-6b36-971f-f2e0d7a5b90c",
+						name = "Open Arm Recording Window",
+						uuid = "7419112a-787d-8664-af71-0e37584315a1",
 						version = 2.1,
 					},
 				},
@@ -820,20 +829,374 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Lua",
-						conditionLua = "return eventArgs.aoeID == 48128",
+						category = "Self",
+						conditionType = 8,
+						localmapid = 1340,
+						uuid = "f0c26b34-4f5d-30d2-901f-3fdd837c8ff0",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
 						dequeueIfLuaFalse = true,
-						name = "Wild Charge 48128",
-						uuid = "6727f973-e84b-217a-98ff-4934ccf29d67",
+						eventArgType = 2,
+						eventSpellID = 48127,
+						uuid = "5cf13e2e-7ae0-cac4-9406-9e2e8f7cd96a",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14545,
+						uuid = "4219a040-09cc-63cc-b9d1-1bd5ed1f6541",
 						version = 3,
 					},
 				},
 			},
-			eventType = 18,
-			name = "Wild Charge Draw - Minotaur",
-			uuid = "6dd07372-d031-bd6d-a356-c94c6194d739",
+			displayPath = "Minotaur Piece",
+			eventType = 3,
+			name = "Charge and Hammer - Start Prediction",
+			timeout = 1,
+			uuid = "bfda83e1-9d78-7312-a1ab-614db698c580",
 			version = 2,
 		},
+		inheritedIndex = 19,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local s = data.bst_hammer_order\nif not s or Now() - s.started > 10000 or s.bossID ~= eventArgs.primaryEntityID then\n    if s and s.uuid then Argus.deleteTimedShape(s.uuid) end\n    s = {started = Now(), seen = {}, count = 0, bossID = eventArgs.primaryEntityID}\n    data.bst_hammer_order = s\nend\nif not s.first then\n    s.first = eventArgs.vfxID\n    s.second = s.first == 2784 and 2785 or 2784\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"3b042423-b8ff-c1e1-9197-525d49bf4a68",
+								true,
+							},
+							
+							{
+								"a7cc678e-2ee2-5e5a-abb9-0a87cd768384",
+								true,
+							},
+							
+							{
+								"44bc9869-e653-85df-870c-61cc1447b8b9",
+								true,
+							},
+							
+							{
+								"c282707d-aa03-8b6d-84e2-a048228838e5",
+								true,
+							},
+						},
+						name = "Remember First and Second Arm",
+						uuid = "6d567629-fc8e-9cb2-bd98-eff399238936",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						localmapid = 1340,
+						name = "Map 1340",
+						uuid = "3b042423-b8ff-c1e1-9197-525d49bf4a68",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventIntValue = 2784,
+						name = "Arm VFX >=2784",
+						uuid = "a7cc678e-2ee2-5e5a-abb9-0a87cd768384",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 2,
+						dequeueIfLuaFalse = true,
+						eventIntValue = 2785,
+						name = "Arm VFX <=2785",
+						uuid = "44bc9869-e653-85df-870c-61cc1447b8b9",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventArgType = 3,
+						eventEntityContentID = 14545,
+						name = "Manticore Piece",
+						uuid = "c282707d-aa03-8b6d-84e2-a048228838e5",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Minotaur Piece",
+			eventType = 27,
+			name = "Charge and Hammer - Record Arm Order",
+			timeout = 1,
+			uuid = "33205e38-99d8-9b57-a4dd-67982d08d1aa",
+			version = 2,
+		},
+		inheritedIndex = 20,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local state = data.bst_charge_hammer\nlocal e = eventArgs\nif state and e.castPosX and e.castPosZ then\n    for key, shape in pairs(state) do\n        local dx, dz = shape.x - e.castPosX, shape.z - e.castPosZ\n        if dx * dx + dz * dz < 0.25 then\n            if shape.uuid then Argus.deleteTimedShape(shape.uuid) end\n            state[key] = nil\n        end\n    end\nend\n\nlocal s = data.bst_hammer_order\nif s and e.entityID then\n    s.dashSeen = s.dashSeen or {}\n    if not s.dashSeen[e.entityID] then\n        s.dashSeen[e.entityID] = true\n        s.dashCount = (s.dashCount or 0) + 1\n        if s.dashCount == 4 and s.first and s.second and s.x and s.y and s.z and s.heading and not s.nextUuid then\n            local offset = s.second == 2784 and math.pi / 2 or -math.pi / 2\n            s.nextUuid = TensorCore.getMoogleDrawer():addTimedRect(6000, s.x, s.y, s.z, 42, 84, s.heading + offset, 0, false, true)\n        end\n    end\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"7a61dc77-dac5-06de-9c44-c5f3d2318c53",
+								true,
+							},
+							
+							{
+								"b1def698-9e7c-19ac-ab00-690efc6161c6",
+								true,
+							},
+							
+							{
+								"bf14109c-3fff-9c01-9954-ab52b6c9132b",
+								true,
+							},
+						},
+						name = "Clear Matching Dash",
+						uuid = "60a37716-f61b-43ba-aaf8-5c3fe1b72ae8",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local s = data.bst_hammer_order\nif s and s.uuid then\n    Argus.deleteTimedShape(s.uuid)\n    s.uuid = nil\n    if s.stage == 1 and s.second and Now() - s.started < 25000 then\n        if s.nextUuid then\n            s.uuid = s.nextUuid\n            s.nextUuid = nil\n        else\n            local offset = s.second == 2784 and math.pi / 2 or -math.pi / 2\n            s.uuid = TensorCore.getMoogleDrawer():addTimedRect(2050, s.x, s.y, s.z, 42, 84, s.heading + offset, 0, false, true)\n        end\n        s.stage = 2\n    else\n        if s.nextUuid then\n            Argus.deleteTimedShape(s.nextUuid)\n            s.nextUuid = nil\n        end\n        s.stage = 3\n    end\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"7a61dc77-dac5-06de-9c44-c5f3d2318c53",
+								true,
+							},
+							
+							{
+								"bf14109c-3fff-9c01-9954-ab52b6c9132b",
+								true,
+							},
+							
+							{
+								"e5d51691-3bd7-670a-8e89-b24e9bf47fd4",
+								true,
+							},
+						},
+						name = "Clear Smash and Show Next Side",
+						uuid = "7ce06c74-7c2b-bf64-ac8e-93cf5b741493",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						localmapid = 1340,
+						name = "Map 1340",
+						uuid = "7a61dc77-dac5-06de-9c44-c5f3d2318c53",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 48130,
+						name = "Wild Charge Damage",
+						uuid = "b1def698-9e7c-19ac-ab00-690efc6161c6",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14545,
+						name = "Manticore Piece",
+						uuid = "bf14109c-3fff-9c01-9954-ab52b6c9132b",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Smash Damage",
+						spellIDList = 
+						{
+							48132,
+							48134,
+						},
+						uuid = "e5d51691-3bd7-670a-8e89-b24e9bf47fd4",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Minotaur Piece",
+			eventType = 2,
+			name = "Charge and Hammer - Clear Resolved Dash",
+			timeout = 1,
+			uuid = "359148a4-1356-ffe1-a959-f8dd0f8ae3e6",
+			version = 2,
+		},
+		inheritedIndex = 21,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.bst_charge_hammer = data.bst_charge_hammer or {}\nlocal state = data.bst_charge_hammer\nlocal e = eventArgs\nfor key, shape in pairs(state) do\n    if e.startTime - shape.startTime > 9000 then state[key] = nil end\nend\nlocal previous = state[e.entityID]\nif previous and previous.uuid then Argus.deleteTimedShape(previous.uuid) end\nlocal x = e.x - math.sin(e.heading) * e.aoeLength\nlocal z = e.z - math.cos(e.heading) * e.aoeLength\nlocal uuid = TensorCore.getMoogleDrawer():addTimedRect(9000, x, e.y, z, e.aoeLength, e.aoeWidth, e.heading, 0, false, true)\nstate[e.entityID] = {uuid = uuid, x = e.x, z = e.z, startTime = e.startTime}\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"45581391-34d8-495a-8651-60cbf9322270",
+								true,
+							},
+							
+							{
+								"3f2b0628-c537-d58d-b871-0ce5c1b814c4",
+								true,
+							},
+						},
+						name = "Record Dash Path",
+						uuid = "423fe248-d7b5-c03f-a3ab-0eb26ce53a11",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local s = data.bst_hammer_order\nif s and Now() - s.started <= 10000 then\n    s.seen = s.seen or {}\n    if not s.seen[eventArgs.entityID] then\n        s.seen[eventArgs.entityID] = true\n        s.count = (s.count or 0) + 1\n        if s.count == 4 and s.first and not s.uuid then\n            s.x, s.y, s.z, s.heading = eventArgs.x, eventArgs.y, eventArgs.z, eventArgs.heading\n            local offset = s.first == 2784 and math.pi / 2 or -math.pi / 2\n            s.uuid = TensorCore.getMoogleDrawer():addTimedRect(10800, s.x, s.y, s.z, 42, 84, s.heading + offset, 0, false, true)\n            s.stage = 1\n        end\n    end\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"45581391-34d8-495a-8651-60cbf9322270",
+								true,
+							},
+							
+							{
+								"3f2b0628-c537-d58d-b871-0ce5c1b814c4",
+								true,
+							},
+						},
+						name = "Predict First Half Arena Smash",
+						uuid = "9a56686c-442a-6e07-9a1e-b1dda7fdc885",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						localmapid = 1340,
+						name = "Map 1340",
+						uuid = "45581391-34d8-495a-8651-60cbf9322270",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.contentID == 14545 and eventArgs.aoeID == 48128",
+						dequeueIfLuaFalse = true,
+						name = "Dash Preview 48128",
+						uuid = "3f2b0628-c537-d58d-b871-0ce5c1b814c4",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Minotaur Piece",
+			eventType = 18,
+			name = "Charge and Hammer - Timed Telegraphs",
+			timeout = 1,
+			uuid = "b6348ac8-3b6f-1cf2-8b16-12b3f4b121ed",
+			version = 2,
+		},
+		inheritedIndex = 22,
 	},
 	
 	{
@@ -849,7 +1212,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Gargoyle Piece",
 			actions = 
 			{
 				
@@ -930,6 +1292,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Gargoyle Piece",
 			eventType = 3,
 			name = "Sweeping Evisceration - Forward then Rear Cleaves",
 			uuid = "66b873a3-1a3c-0171-8859-5005adb73fa6",
@@ -940,7 +1303,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Gargoyle Piece",
 			actions = 
 			{
 				
@@ -997,6 +1359,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Gargoyle Piece",
 			eventType = 2,
 			name = "Sweeping Evisceration - Mirrored Rear Cleave",
 			uuid = "e998de34-539e-f251-bf21-3bb0c548aa18",
@@ -1007,7 +1370,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Gargoyle Piece",
 			actions = 
 			{
 				
@@ -1065,6 +1427,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Gargoyle Piece",
 			eventType = 3,
 			name = "Sweeping Evisceration - Tether Range",
 			uuid = "8048292d-06be-7aa0-b1ce-c8f7989f85b9",
@@ -1085,7 +1448,6 @@ local tbl =
 	{
 		data = 
 		{
-			displayPath = "Borgny the Venomous",
 			actions = 
 			{
 				
@@ -1163,6 +1525,7 @@ local tbl =
 					},
 				},
 			},
+			displayPath = "Borgny the Venomous",
 			eventType = 3,
 			name = "Toxic Breath Wall Cone",
 			throttleTime = 5000,
