@@ -1106,6 +1106,11 @@ local tbl =
 								"5efd16b4-0877-dff8-98c4-5f190fcea495",
 								true,
 							},
+							
+							{
+								"9fc7715d-66e3-c1f7-a80d-6fe67a886a09",
+								true,
+							},
 						},
 						endIfUsed = true,
 						name = "Draw Toxic Breath Wall Cone",
@@ -1139,6 +1144,21 @@ local tbl =
 						eventSpellID = 48807,
 						name = "Toxic Breath",
 						uuid = "5efd16b4-0877-dff8-98c4-5f190fcea495",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						channelCheckTimeRemain = 2,
+						channelCheckType = 3,
+						comparator = 2,
+						conditionType = 5,
+						name = "<2 seconds Left on channel",
+						partyTargetType = "Event Entity",
+						uuid = "9fc7715d-66e3-c1f7-a80d-6fe67a886a09",
 						version = 3,
 					},
 				},
