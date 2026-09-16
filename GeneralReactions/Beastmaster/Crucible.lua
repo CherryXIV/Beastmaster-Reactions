@@ -1550,6 +1550,384 @@ local tbl =
 	{
 		data = 
 		{
+			displayPath = "Draws",
+			name = "Lauda the Spellcleaver",
+			uuid = "df95505e-20b0-78b2-adb2-85442c7b455b",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local entity = TensorCore.mGetEntity(eventArgs.entityID)\nif eventArgs.entityContentID ~= 14693 or entity == nil or entity.charType ~= 5 then\n    return\nend\n\nlocal drawer = TensorCore.getMoogleFlatDrawer()\ndrawer:setColor(0x00000000, 0x00000000, 0x00000000)\nif self.drawUUID ~= nil then\n    Argus.deleteTimedShape(self.drawUUID)\nend\nself.drawUUID = drawer:addTimedConeOnEnt(3600000, eventArgs.entityID, 8, 2 * math.pi / 3, nil, 0, false, true)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"15318b09-1f67-9e38-bd05-de6a7fc49f61",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Draw Persistent Cone Outline",
+						uuid = "e71feb82-5876-47e7-a61f-8a717bac8bed",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14693,
+						name = "Lauda",
+						uuid = "15318b09-1f67-9e38-bd05-de6a7fc49f61",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Lauda the Spellcleaver",
+			eventType = 5,
+			name = "Lauda Auto Attack Cone",
+			uuid = "aced4575-2f56-db21-b902-f5c838442ddc",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "Draws",
+			name = "Sphinx Piece",
+			uuid = "eab19342-dd00-59b5-9c8e-79d8b1fc2b72",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local buffs = TensorCore.getBuffs(Player)\nlocal assignmentName = nil\nlocal duration = 0\n\nfor _, buff in pairs(buffs) do\n    if buff.name == \"All Odds\"\n        or buff.name == \"All Evens\"\n        or buff.name == \"All Three\"\n        or buff.name == \"All Primes\" then\n        assignmentName = buff.name\n        duration = buff.duration or 0\n        break\n    end\nend\n\nif assignmentName == nil then\n    return\nend\n\nlocal value = eventArgs.entityContentID - 2015492\nlocal correct = false\n\nif assignmentName == \"All Odds\" then\n    correct = value % 2 == 1\nelseif assignmentName == \"All Evens\" then\n    correct = value % 2 == 0\nelseif assignmentName == \"All Three\" then\n    correct = value % 3 == 0\nelseif assignmentName == \"All Primes\" then\n    correct = value == 2 or value == 3 or value == 5 or value == 7\nend\n\nlocal color = correct and 0x8000FF00 or 0x800000FF\nlocal drawer = TensorCore.getStaticFlatDrawer(color, 1.5)\nlocal drawDuration = math.max(1, math.floor(duration * 1000))\ndrawer:addTimedCenteredRect(\n    drawDuration,\n    eventArgs.x,\n    eventArgs.y + 0.05,\n    eventArgs.z,\n    12,\n    12,\n    0,\n    0,\n    false,\n    true\n)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"37c01db2-fc29-e2bc-a7c4-4e50ed27e62b",
+								true,
+							},
+							
+							{
+								"9d2a50de-b8f5-16b6-afc1-27fe900979af",
+								true,
+							},
+						},
+						name = "Colour Assignment Tile",
+						uuid = "96a98a97-da5f-9ede-898c-d6d4803753c4",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 5,
+						eventIntValue = 2015493,
+						name = "Tile ID >= 1",
+						uuid = "37c01db2-fc29-e2bc-a7c4-4e50ed27e62b",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 2,
+						dequeueIfLuaFalse = true,
+						eventArgType = 5,
+						eventIntValue = 2015501,
+						name = "Tile ID <= 9",
+						uuid = "9d2a50de-b8f5-16b6-afc1-27fe900979af",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Sphinx Piece",
+			eventType = 29,
+			name = "Sphinx Assignment Tile Colours",
+			timeout = 20,
+			uuid = "8abc95af-f14b-a274-b813-49a387333814",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.sphinx_mnemonic = data.sphinx_mnemonic or {}\nlocal state = data.sphinx_mnemonic\nstate.pieces = state.pieces or {}\n\nstate.pieces[eventArgs.entityContentID] = {\n    id = eventArgs.entityID,\n    name = eventArgs.entityName\n}\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"599771fa-5217-c941-8f1b-1ad428681cb3",
+								true,
+							},
+						},
+						name = "Store Piece ID",
+						uuid = "e3cb7a93-c68a-0a1d-afe3-235841391eba",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.entityContentID >= 14666 and eventArgs.entityContentID <= 14669",
+						dequeueIfLuaFalse = true,
+						name = "Mnemonic Piece",
+						uuid = "599771fa-5217-c941-8f1b-1ad428681cb3",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Sphinx Piece",
+			eventType = 5,
+			name = "Mnemonic Riddle - Track Pieces",
+			uuid = "1f4b1657-5b3c-5dad-8210-5f53b306b189",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.sphinx_answerID = 14668\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"95ca1224-3e48-1621-8631-959cbf1c5708",
+								true,
+							},
+						},
+						name = "Remember Opo-opo",
+						uuid = "0862c627-9062-4304-9e8a-d5ee7c347b39",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.sphinx_answerID = 14669\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"5fcf928b-5dfd-19c6-98d3-e8062f0243f7",
+								true,
+							},
+						},
+						name = "Remember Puk",
+						uuid = "8541b006-669e-6f48-af27-bc735cf7f46e",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.sphinx_answerID = 14666\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"89735157-6e7a-28e2-9478-3e7b4f1577e3",
+								true,
+							},
+						},
+						name = "Remember Dodo",
+						uuid = "3c75810b-e8a2-6550-b50e-9951c4c54b56",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.sphinx_answerID = 14667\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"1e095fba-3f84-d0cb-a0bb-411abe54a9d9",
+								true,
+							},
+						},
+						name = "Remember Pugil",
+						uuid = "75c3c0c5-fcc1-ad2b-9f22-137b0a8a047f",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventChatLine = "beast",
+						name = "Riddle Opo-opo",
+						uuid = "95ca1224-3e48-1621-8631-959cbf1c5708",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventChatLine = "scale",
+						name = "Riddle Puk",
+						uuid = "5fcf928b-5dfd-19c6-98d3-e8062f0243f7",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventChatLine = "cloud",
+						name = "Riddle Dodo",
+						uuid = "89735157-6e7a-28e2-9478-3e7b4f1577e3",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventChatLine = "wave",
+						name = "Riddle Pugil",
+						uuid = "1e095fba-3f84-d0cb-a0bb-411abe54a9d9",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Sphinx Piece",
+			eventType = 7,
+			name = "Mnemonic Riddle - Remember Answer",
+			timeout = 15,
+			uuid = "d9f238d2-2b19-6679-b4d7-9150fa7ae1e8",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local answerID = data.sphinx_answerID\n\nlocal green = TensorCore.getStaticFlatDrawer(0x8000FF00)\nlocal red = TensorCore.getStaticFlatDrawer(0x800000FF)\nlocal pieces = TensorCore.entityList(\"\")\n\nfor _, piece in pairs(pieces or {}) do\n    local contentID = piece.contentid\n    if contentID >= 14666 and contentID <= 14669 then\n        local drawer = contentID == answerID and green or red\n        drawer:addTimedCircleOnEnt(300000, piece.id, 2.2, 0, false, true)\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"cbd04022-53ce-3943-90f2-5548288651b3",
+								true,
+							},
+						},
+						name = "Draw Answer Circles",
+						uuid = "3ea30f14-e78f-59cc-ab3f-e2ad8e7775ab",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14665,
+						name = "Transfigure - Sphinx",
+						uuid = "cbd04022-53ce-3943-90f2-5548288651b3",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Sphinx Piece",
+			eventType = 3,
+			name = "Mnemonic Riddle - Mark Answers",
+			uuid = "6ca0e758-82a2-a32b-bfe9-65aa960051de",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
 			actions = 
 			{
 				
