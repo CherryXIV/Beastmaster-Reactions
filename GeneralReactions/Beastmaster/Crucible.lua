@@ -1928,6 +1928,548 @@ local tbl =
 	{
 		data = 
 		{
+			displayPath = "Draws",
+			name = "Medusa Piece",
+			uuid = "ce6e0835-5096-2dd5-b1eb-fbaaae7200f8",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local blacklist = MoogleTelegraphs.Settings.aoeIDUserBlacklist\nif blacklist[49291] == nil then\n    blacklist[49291] = \"Ringing Blade\"\nend\nif blacklist[49296] == nil then\n    blacklist[49296] = \"Shockwave\"\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"cc030024-44c3-d402-b5e1-381629cd7283",
+								true,
+							},
+						},
+						name = "Hide Ringing Blade and Shockwave",
+						uuid = "ecbe5df3-2b92-70ed-9653-e09827aebbc8",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.entityContentID == 14660",
+						dequeueIfLuaFalse = true,
+						name = "Medusa Piece Spawn",
+						uuid = "cc030024-44c3-d402-b5e1-381629cd7283",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Medusa Piece",
+			eventType = 5,
+			name = "Medusa Evisceration - Hide Native AOEs",
+			timeout = 1,
+			uuid = "ea120cc1-19b9-3d69-bf08-2d1411a05b8a",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local e = eventArgs\nlocal blacklist = MoogleTelegraphs.Settings.aoeIDUserBlacklist\nif blacklist[49291] == nil then\n    blacklist[49291] = \"Ringing Blade\"\nend\nif blacklist[49296] == nil then\n    blacklist[49296] = \"Shockwave\"\nend\n\ndata.medusaEviscerationDanger = data.medusaEviscerationDanger or {}\nlocal state = data.medusaEviscerationDanger\n\nif state.drawWave == nil then\n    function state.drawWave(drawer, wave, timeout, delay, circlePhase, radius)\n        if circlePhase then\n            drawer:addTimedDonutCone(timeout, wave.x, wave.y, wave.z, radius, wave.length, math.pi / 4, wave.heading, delay, false, true)\n        else\n            drawer:addTimedCone(timeout, wave.x, wave.y, wave.z, radius, math.pi / 4, wave.heading, delay, false, true)\n        end\n    end\nend\n\nlocal redFill = 0x55FF0000\nlocal redEdge = 0xCCFF0000\nlocal drawer = TensorCore.getCachedFlatDrawer(redFill, redFill, redFill, redEdge, 1.5)\nlocal duration = e.duration * 1000\nlocal hitAt = e.startTime + duration\n\nif e.aoeID == 49296 then\n    if state.firstWaveStart == nil or e.startTime - state.firstWaveStart > 12000 then\n        state.firstWaveStart = e.startTime\n        state.firstWave = {}\n        state.secondWaveStart = nil\n        state.firstHitAt = nil\n        state.secondHitAt = nil\n        state.secondAOE = nil\n        state.secondAOEDrawn = false\n        state.firstCircle = nil\n        state.secondCircle = nil\n    end\n\n    local wave = {\n        x = e.x,\n        y = e.y,\n        z = e.z,\n        heading = e.heading,\n        length = e.aoeLength,\n        startTime = e.startTime,\n        hitAt = hitAt\n    }\n\n    if math.abs(e.startTime - state.firstWaveStart) < 100 then\n        state.firstWave[#state.firstWave + 1] = wave\n        if state.firstHitAt ~= nil and state.firstCircle ~= nil then\n            local timeout = math.min(hitAt, state.firstHitAt) - e.startTime\n            if timeout > 0 then\n                local radius = state.firstCircle and state.firstRadius or 5\n                state.drawWave(drawer, wave, timeout, 0, state.firstCircle, radius)\n            end\n        end\n    else\n        if state.secondWaveStart == nil then\n            state.secondWaveStart = e.startTime\n        end\n        if state.firstHitAt ~= nil and state.secondCircle ~= nil then\n            local phaseStart = math.max(e.startTime, state.firstHitAt)\n            local phaseEnd = hitAt\n            if state.secondHitAt ~= nil then\n                phaseEnd = math.min(phaseEnd, state.secondHitAt)\n            end\n            local timeout = phaseEnd - phaseStart\n            local delay = phaseStart - e.startTime\n            if timeout > 0 then\n                local radius = state.secondCircle and state.secondRadius or 5\n                state.drawWave(drawer, wave, timeout, delay, state.secondCircle, radius)\n            end\n        end\n    end\n\n    self.used = true\n    return\nend\n\nlocal aoe = {\n    id = e.aoeID,\n    x = e.x,\n    y = e.y,\n    z = e.z,\n    length = e.aoeLength,\n    startTime = e.startTime,\n    hitAt = hitAt\n}\n\nif e.aoeID == 49291 or e.aoeID == 49295 then\n    state.secondAOE = aoe\n    state.secondHitAt = hitAt\n    state.secondCircle = e.aoeID == 49295\n    state.secondRadius = state.secondCircle and e.aoeLength or 5\n\n    if e.aoeID == 49291 and state.firstHitAt ~= nil and not state.secondAOEDrawn then\n        local delay = math.max(0, state.firstHitAt - e.startTime)\n        local timeout = hitAt - math.max(e.startTime, state.firstHitAt)\n        if timeout > 0 then\n            drawer:addTimedDonut(timeout, e.x, e.y, e.z, 5, e.aoeLength, delay, false, true)\n            state.secondAOEDrawn = true\n        end\n    end\n\n    self.used = true\n    return\nend\n\nstate.firstHitAt = hitAt\nstate.firstCircle = e.aoeID == 49289\nstate.firstRadius = state.firstCircle and e.aoeLength or 5\nstate.secondCircle = not state.firstCircle\n\nif state.secondAOE ~= nil then\n    state.secondHitAt = state.secondAOE.hitAt\n    state.secondRadius = state.secondCircle and state.secondAOE.length or 5\nend\n\nif state.firstWave ~= nil then\n    for _, wave in ipairs(state.firstWave) do\n        local timeout = math.min(wave.hitAt, state.firstHitAt) - e.startTime\n        if timeout > 0 then\n            state.drawWave(drawer, wave, timeout, 0, state.firstCircle, state.firstRadius)\n        end\n    end\nend\n\nif state.secondAOE ~= nil and state.secondAOE.id == 49291 and not state.secondAOEDrawn then\n    local delay = math.max(0, state.firstHitAt - e.startTime)\n    local timeout = state.secondAOE.hitAt - math.max(e.startTime, state.firstHitAt)\n    if timeout > 0 then\n        drawer:addTimedDonut(timeout, state.secondAOE.x, state.secondAOE.y, state.secondAOE.z, 5, state.secondAOE.length, delay, false, true)\n        state.secondAOEDrawn = true\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"e6a163c6-9ad8-d4bc-924e-8a4b7e44cc9f",
+								true,
+							},
+						},
+						name = "Draw Non-overlapping Red Danger",
+						uuid = "e3a228d6-aa96-7046-aaa2-11a31bc30e6c",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.contentID == 14660 and (eventArgs.aoeID == 49289 or eventArgs.aoeID == 49291 or eventArgs.aoeID == 49293 or eventArgs.aoeID == 49295 or eventArgs.aoeID == 49296)",
+						dequeueIfLuaFalse = true,
+						name = "Medusa Evisceration AOE",
+						uuid = "e6a163c6-9ad8-d4bc-924e-8a4b7e44cc9f",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Medusa Piece",
+			eventType = 18,
+			name = "Evisceration - Medusa Danger Areas",
+			timeout = 1,
+			uuid = "d9571e5a-292c-f39c-ab29-8f2ef8e36291",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "Draws",
+			name = "Mindflayer Piece",
+			uuid = "4fb59dee-3f5e-f63b-bdd1-4ee1b738e841",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local e = eventArgs\nlocal ent = TensorCore.mGetEntity(e.entityID)\nif ent ~= nil and ent.charType == 5 and ent.pos ~= nil and ent.contentId == 14634 then\n    TensorCore.getMoogleFlatDrawer():addTimedCircle(700, ent.pos.x, ent.pos.y, ent.pos.z, 6, 0, false, true)\n    self.used = true\nend",
+						name = "Draw Spore Spill",
+						uuid = "60e04a8a-8d78-ffb0-9aa1-fdca310e4206",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.entityContentID == 14634 and eventArgs.newAnimID == 73",
+						dequeueIfLuaFalse = true,
+						name = "Content ID 14634 Death Animation",
+						uuid = "720bc1f5-8670-0db1-8beb-5d5b3844e031",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Mindflayer Piece",
+			eventType = 23,
+			name = "Myconid Death AOE",
+			timeout = 2,
+			uuid = "986eb53a-e748-27e8-9896-276ba1529d4a",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local state = data.myconid_hp_drawn\nif state == nil then\n    state = {}\n    data.myconid_hp_drawn = state\nend\nlocal entities = TensorCore.entityList(\"\")\nif entities ~= nil then\n    for _, ent in pairs(entities) do\n        if ent ~= nil then\n            local hp = ent.hp\n            if hp ~= nil then\n                if hp.percent < 50 then\n                    if ent.contentID == 14634 then\n                        if ent.charType == 5 then\n                            if ent.pos ~= nil and state[ent.id] == nil then\n                                TensorCore.getMoogleFlatDrawer():addTimedCircle(35000, ent.pos.x, ent.pos.y, ent.pos.z, 6, 0, false, true)\n                                state[ent.id] = true\n                            end\n                        end\n                    end\n                end\n            end\n        end\n    end\nend\nself.used = true",
+						name = "Draw Early Spore Spill",
+						uuid = "013282a4-ea25-a74d-8ab1-89870f5d8be1",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+			},
+			displayPath = "Draws/Mindflayer Piece",
+			name = "Myconid Death AOE - Early HP",
+			throttleTime = 250,
+			timeout = 1,
+			uuid = "adfc4a1d-af8c-0387-8a2c-9876a66b2776",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local state = data.arcane_sphere_draws\nif state == nil then\n    state = {}\n    data.arcane_sphere_draws = state\nend\nlocal entities = TensorCore.entityList(\"\")\nlocal activeAOEs = Argus.getCurrentAOEs()\nif entities ~= nil then\n    for _, sphere in pairs(entities) do\n        if sphere ~= nil then\n            if sphere.contentID == 14637 then\n                local entry = state[sphere.id]\n                if entry ~= \"done\" then\n                    local active = false\n                    if activeAOEs ~= nil then\n                        for _, aoe in pairs(activeAOEs) do\n                            if aoe ~= nil then\n                                if aoe.entityID == sphere.id then\n                                    if aoe.aoeID == 49203 or aoe.aoeID == 49204 then\n                                        active = true\n                                    elseif aoe.aoeWidth ~= nil then\n                                        if aoe.aoeWidth >= 10 then\n                                            active = true\n                                        end\n                                    end\n                                end\n                            end\n                        end\n                    end\n                    if active then\n                        if entry ~= nil then\n                            if entry.uuid1 ~= nil then\n                                Argus.deleteTimedShape(entry.uuid1)\n                            end\n                            if entry.uuid2 ~= nil then\n                                Argus.deleteTimedShape(entry.uuid2)\n                            end\n                        end\n                        state[sphere.id] = \"done\"\n                    elseif sphere.pos ~= nil then\n                        local width = 4\n                        local tethers = Argus.getTethersOnEnt(sphere.id)\n                        if tethers ~= nil then\n                            for _, tether in pairs(tethers) do\n                                if tether ~= nil then\n                                    local partnerID = tether.partnerid\n                                    if partnerID == nil then\n                                        partnerID = tether.targetid\n                                    end\n                                    local partner = TensorCore.mGetEntity(partnerID)\n                                    if partner ~= nil then\n                                        if partner.contentID == 14633 then\n                                            width = 10\n                                        end\n                                    end\n                                end\n                            end\n                        end\n                        if entry ~= nil then\n                            if entry.width > width then\n                                width = entry.width\n                            end\n                        end\n                        if entry == nil or entry.width ~= width then\n                            if entry ~= nil then\n                                if entry.uuid1 ~= nil then\n                                    Argus.deleteTimedShape(entry.uuid1)\n                                end\n                                if entry.uuid2 ~= nil then\n                                    Argus.deleteTimedShape(entry.uuid2)\n                                end\n                            end\n                            local drawer = TensorCore.getMoogleFlatDrawer()\n                            local uuid1 = drawer:addTimedRect(35000, sphere.pos.x, sphere.pos.y, sphere.pos.z, 100, width, sphere.pos.h, 0, false, true)\n                            local uuid2 = drawer:addTimedRect(35000, sphere.pos.x, sphere.pos.y, sphere.pos.z, 100, width, sphere.pos.h + math.pi, 0, false, true)\n                            state[sphere.id] = {width = width, uuid1 = uuid1, uuid2 = uuid2}\n                        end\n                    end\n                end\n            end\n        end\n    end\nend\nself.used = true",
+						name = "Draw Sphere AOEs",
+						uuid = "32c29710-a093-7ecb-8ad7-e1083c99f820",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return true",
+						dequeueIfLuaFalse = true,
+						name = "Arcane Sphere",
+						uuid = "fbf0706d-cc56-505e-932e-f8f561adda31",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Mindflayer Piece",
+			name = "Arcane Sphere Tethered Larger AOE",
+			throttleTime = 250,
+			timeout = 1,
+			uuid = "c15e8f25-7308-99b5-a27a-10e71f8dc0ca",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "Draws",
+			name = "Guttler the Gutter",
+			uuid = "1847b7ab-83f6-1288-87db-d9a45b4076d9",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local entity = TensorCore.mGetEntity(eventArgs.entityID)\nif eventArgs.entityContentID ~= 14592 or entity == nil or (entity.charType ~= 5 and entity.charType ~= 11) then\n    return\nend\n\nlocal drawer = TensorCore.getMoogleFlatDrawer()\ndrawer:setColor(0x00000000, 0x00000000, 0x00000000)\nif self.drawUUID ~= nil then\n    Argus.deleteTimedShape(self.drawUUID)\nend\nself.drawUUID = drawer:addTimedConeOnEnt(3600000, eventArgs.entityID, 8, 2 * math.pi / 3, nil, 0, false, true)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"89a1e270-f5fa-30e0-a672-8919611ff56a",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Draw Guttler Cone Outline",
+						uuid = "109ea510-0ea4-777d-8bdc-32f9a6e81098",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14592,
+						name = "Guttler",
+						uuid = "89a1e270-f5fa-30e0-a672-8919611ff56a",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Guttler the Gutter",
+			eventType = 5,
+			name = "Guttler Auto Attack Cone",
+			uuid = "e49cdfd3-cea3-63a4-b736-9e2af3067b3b",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "Draws",
+			name = "Chimera Piece",
+			uuid = "9e1c1eb7-a7e3-3e46-9d40-9db8729be0e6",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local e = eventArgs\nlocal drawer = TensorCore.getMoogleFlatDrawer()\nlocal timeout = 3000\nif e.duration ~= nil and e.duration > 0 then\n    timeout = e.duration * 1000\nelseif e.delay ~= nil and e.delay > 0 then\n    timeout = e.delay * 1000\nend\nlocal heading = e.heading or 0\nif e.aoeCastType == 13 then\n    drawer:addTimedCone(timeout, e.x, e.y, e.z, e.aoeLength, math.pi * 4 / 3, heading, 0, false, true)\nelseif e.aoeCastType == 1 then\n    drawer:addTimedCircle(timeout, e.x, e.y, e.z, e.aoeLength, 0, false, true)\nelseif e.aoeCastType == 10 then\n    local outer = math.min(e.aoeLength, 20)\n    local inner = 8\n    drawer:addTimedDonut(timeout, e.x, e.y, e.z, inner, outer, 0, false, true)\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"520894c5-62eb-a09a-b2d0-1b740c677c16",
+								true,
+							},
+						},
+						name = "Draw Chimera Cone and Ring AOEs",
+						uuid = "aba1e6e1-32fd-01ce-8023-4274f533f419",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs ~= nil and eventArgs.contentID == 14663 and eventArgs.aoeLength ~= nil and eventArgs.aoeLength > 0 and (eventArgs.aoeCastType == 1 or eventArgs.aoeCastType == 10 or eventArgs.aoeCastType == 13)",
+						dequeueIfLuaFalse = true,
+						name = "Chimera Cone/Point Blank/Donut AOE",
+						uuid = "520894c5-62eb-a09a-b2d0-1b740c677c16",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Chimera Piece",
+			eventType = 18,
+			name = "Chimera Piece - 240° Cone Attacks",
+			timeout = 1,
+			uuid = "4438ac68-d13b-46b6-af75-4a98fd54aac7",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local drawer = TensorCore.getMoogleFlatDrawer()\nlocal duration = 5000\nif eventArgs.channelTimeMax ~= nil and eventArgs.channelTimeMax > 0 then\n    duration = math.floor(eventArgs.channelTimeMax * 1000)\nend\ndrawer:addTimedCircleOnEnt(duration, eventArgs.entityID, 15, 0, false, true, 1)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"193acd05-030a-b484-bda8-26d4159be53a",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Tether Range Circle (15y)",
+						uuid = "34d2847b-50a0-b7d1-8aaa-7cd52093acb2",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						eventSpellID = 49324,
+						name = "Rushing Roar Channels",
+						spellIDList = 
+						{
+							49322,
+							49323,
+							49324,
+							49325,
+						},
+						uuid = "193acd05-030a-b484-bda8-26d4159be53a",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Chimera Piece",
+			eventType = 3,
+			name = "Chimera Tether Range Circle",
+			timeout = 1,
+			uuid = "d8daa7fc-4963-41ce-80b2-466b089cf5b5",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local headStates = _G.TensorReactionsChimeraHeadCleave\nlocal headState = headStates ~= nil and headStates[eventArgs.entityID] or nil\nif headState == nil or headState.seenAt == nil or TimeSince(headState.seenAt) > 1000 then\n    return\nend\nlocal headingOffset = headState.headingOffset\nheadStates[eventArgs.entityID] = nil\nlocal channelMs = 0\nif eventArgs.channelTimeMax ~= nil and eventArgs.channelTimeMax > 0 then\n    channelMs = math.floor(eventArgs.channelTimeMax * 1000)\nend\nlocal drawer = TensorCore.getMoogleFlatDrawer()\ndrawer:addTimedConeOnEnt(4000, eventArgs.entityID, 60, math.pi * 4 / 3, nil, channelMs, false, true, headingOffset, false)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"113ad6e9-e279-f105-bad2-539b9aef9e92",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Draw Head 240° Cone at Dash",
+						uuid = "1122deef-34ec-5f99-b0fe-3602df93727a",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Rushing Roar Head Channels",
+						spellIDList = 
+						{
+							49322,
+							49323,
+							49324,
+							49325,
+						},
+						uuid = "113ad6e9-e279-f105-bad2-539b9aef9e92",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Chimera Piece",
+			eventType = 3,
+			name = "Chimera Head - 240° Cone",
+			timeout = 1,
+			uuid = "ec628ae7-ec31-fa90-b895-edac3a27c724",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local offsets = {\n    [2968] = -math.pi * 2 / 3,\n    [2969] = math.pi * 2 / 3,\n    [2970] = 0,\n}\nlocal headingOffset = offsets[eventArgs.vfxID]\nif headingOffset == nil then\n    return\nend\n_G.TensorReactionsChimeraHeadCleave = _G.TensorReactionsChimeraHeadCleave or {}\n_G.TensorReactionsChimeraHeadCleave[eventArgs.primaryEntityID] = {\n    headingOffset = headingOffset,\n    seenAt = Now(),\n}\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"32100249-ee42-9ccd-b6d1-a2e4e6037d02",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Remember Chimera Head Direction",
+						uuid = "320cf6dc-a834-cc2d-affe-986e9b8b4170",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.primaryEntityContentID == 14663 and (eventArgs.vfxID == 2968 or eventArgs.vfxID == 2969 or eventArgs.vfxID == 2970)",
+						dequeueIfLuaFalse = true,
+						name = "Chimera Head Indicator VFX",
+						uuid = "32100249-ee42-9ccd-b6d1-a2e4e6037d02",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Chimera Piece",
+			eventType = 27,
+			name = "Chimera Head - Remember Cleave VFX",
+			timeout = 1,
+			uuid = "750e731d-a4af-5e1c-b7b4-8964ab9dda75",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if GUI:Begin(\"Battlehorn\") then\n    local ui = GUI:GetWindowFontSize()\n    local buttonWidth = ui * 8\n    local buttonHeight = ui * 1.8\n    local player = TensorCore.mGetPlayer()\n    local currentHorn = AnyoneCore.BST.GetBattlehorn(player)\n    local function hornButton(label, horn, actionID)\n        local active = currentHorn == horn\n        local action = ActionList:Get(1, actionID)\n        local usable = active or (action and action:IsReady(player))\n        local r, g, b = active and 0.20 or (usable and 0.80 or 0.35), active and 0.80 or (usable and 0.20 or 0.35), active and 0.20 or (usable and 0.20 or 0.35)\n        GUI:PushStyleColor(GUI.Col_Button, r, g, b, 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonHovered, math.min(r + 0.10, 1.0), math.min(g + 0.10, 1.0), math.min(b + 0.10, 1.0), 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonActive, math.min(r + 0.15, 1.0), math.min(g + 0.15, 1.0), math.min(b + 0.15, 1.0), 1.0)\n        local pressed = GUI:Button(label, buttonWidth, buttonHeight)\n        GUI:PopStyleColor(3)\n        if pressed and usable then\n            AnyoneCore.BST.Settings.Battlehorn = horn\n            if player and player.incombat and usable and not active then\n                AnyoneCore.BST.RequestAction(\"partingBlow\")\n            end\n        end\n    end\n    hornButton(\"Horn 1\", 1, 44881)\n    hornButton(\"Horn 2\", 2, 44892)\n    hornButton(\"Horn 3\", 3, 44894)\n    GUI:End()\nend",
+						name = "Battlehorn Buttons",
+						uuid = "c8973ed5-91c7-a6c4-a184-37c2558e6ef2",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+			},
+			eventType = 13,
+			name = "Battlehorn HUD",
+			uuid = "8561a94f-5f8c-97c2-9942-82fb718885fa",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
 			actions = 
 			{
 				
