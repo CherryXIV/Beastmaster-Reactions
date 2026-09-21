@@ -2054,6 +2054,14 @@ local tbl =
 					{
 						aType = "Lua",
 						actionLua = "local e = eventArgs\nlocal ent = TensorCore.mGetEntity(e.entityID)\nif ent ~= nil and ent.charType == 5 and ent.pos ~= nil and ent.contentId == 14634 then\n    TensorCore.getMoogleFlatDrawer():addTimedCircle(700, ent.pos.x, ent.pos.y, ent.pos.z, 6, 0, false, true)\n    self.used = true\nend",
+						conditions = 
+						{
+							
+							{
+								"720bc1f5-8670-0db1-8beb-5d5b3844e031",
+								true,
+							},
+						},
 						name = "Draw Spore Spill",
 						uuid = "60e04a8a-8d78-ffb0-9aa1-fdca310e4206",
 						version = 2.1,
@@ -2460,6 +2468,7 @@ local tbl =
 			conditions = 
 			{
 			},
+			enabled = false,
 			eventType = 13,
 			name = "Battlehorn HUD",
 			uuid = "8561a94f-5f8c-97c2-9942-82fb718885fa",
