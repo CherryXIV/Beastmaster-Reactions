@@ -1550,6 +1550,56 @@ local tbl =
 	{
 		data = 
 		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if eventArgs.entityContentID == 14630 then\n    local drawer = TensorCore.getMoogleDrawer()\n    drawer:addTimedCircleOnEnt(20000, eventArgs.entityID, 2.3, 0, false, true)\nend",
+						conditions = 
+						{
+
+							{
+								"ff4ec33d-b446-9a0d-9caa-86ee9b28258d",
+								true,
+							},
+						},
+						name = "Draw poison cloud rings",
+						uuid = "558fcb33-f2fc-f579-92b0-8eaebe322dac",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14630,
+						eventEntityName = "Borgny the Venomous",
+						name = "Poison Cloud",
+						uuid = "ff4ec33d-b446-9a0d-9caa-86ee9b28258d",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Borgny the Venomous",
+			eventType = 5,
+			name = "Poison Cloud Rings",
+			uuid = "c431ec70-d960-368a-bd75-69da114cddd8",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
 			displayPath = "Draws",
 			name = "Lauda the Spellcleaver",
 			uuid = "df95505e-20b0-78b2-adb2-85442c7b455b",
@@ -2451,27 +2501,447 @@ local tbl =
 	{
 		data = 
 		{
+			displayPath = "Draws",
+			name = "Ahriman Piece",
+			uuid = "a8c4e2f1-7b3d-4e9a-9c5f-1d6e8a0b2c4d",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
 			actions = 
 			{
-				
+
 				{
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "if GUI:Begin(\"Battlehorn\") then\n    local ui = GUI:GetWindowFontSize()\n    local buttonWidth = ui * 8\n    local buttonHeight = ui * 1.8\n    local player = TensorCore.mGetPlayer()\n    local currentHorn = AnyoneCore.BST.GetBattlehorn(player)\n    local function hornButton(label, horn, actionID)\n        local active = currentHorn == horn\n        local action = ActionList:Get(1, actionID)\n        local usable = active or (action and action:IsReady(player))\n        local r, g, b = active and 0.20 or (usable and 0.80 or 0.35), active and 0.80 or (usable and 0.20 or 0.35), active and 0.20 or (usable and 0.20 or 0.35)\n        GUI:PushStyleColor(GUI.Col_Button, r, g, b, 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonHovered, math.min(r + 0.10, 1.0), math.min(g + 0.10, 1.0), math.min(b + 0.10, 1.0), 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonActive, math.min(r + 0.15, 1.0), math.min(g + 0.15, 1.0), math.min(b + 0.15, 1.0), 1.0)\n        local pressed = GUI:Button(label, buttonWidth, buttonHeight)\n        GUI:PopStyleColor(3)\n        if pressed and usable then\n            AnyoneCore.BST.Settings.Battlehorn = horn\n            if player and player.incombat and usable and not active then\n                AnyoneCore.BST.RequestAction(\"partingBlow\")\n            end\n        end\n    end\n    hornButton(\"Horn 1\", 1, 44881)\n    hornButton(\"Horn 2\", 2, 44892)\n    hornButton(\"Horn 3\", 3, 44894)\n    GUI:End()\nend",
-						name = "Battlehorn Buttons",
-						uuid = "c8973ed5-91c7-a6c4-a184-37c2558e6ef2",
+						actionLua = "if eventArgs.entityID ~= Player.id then\n    self.used = true\n    return\nend\n\nlocal dangerChannel\nif eventArgs.buffID == 5537 then\n    dangerChannel = 49426\nelseif eventArgs.buffID == 5536 then\n    dangerChannel = 49425\nelse\n    self.used = true\n    return\nend\n\nlocal mt = MoogleTelegraphs and MoogleTelegraphs.Settings\nif mt and mt.aoeIDUserBlacklist then\n    mt.aoeIDUserBlacklist[dangerChannel] = nil\nend\n\nself.used = true",
+						conditions = 
+						{
+
+							{
+								"1d902c80-71b1-c95d-9f2c-027ffd058911",
+								true,
+							},
+						},
+						name = "Show Dangerous Moogle Telegraph",
+						uuid = "34d18d38-615c-c831-af0f-b37a9007e90b",
 						version = 2.1,
 					},
 				},
 			},
 			conditions = 
 			{
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 0,
+						eventArgType = 3,
+						eventOwnerContentID = 14688,
+						name = "Ahriman Debuff Owner",
+						uuid = "1d902c80-71b1-c95d-9f2c-027ffd058911",
+						version = 3,
+					},
+				},
 			},
-			enabled = false,
+			displayPath = "Draws/Ahriman Piece",
+			eventType = 8,
+			name = "Ahriman Double Vision - Show Dangerous Gaze",
+			uuid = "af122da8-b6e9-7231-8d41-02f2c139a752",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local mt = MoogleTelegraphs and MoogleTelegraphs.Settings\nif mt and mt.aoeIDUserBlacklist then\n    if eventArgs.spellID == 49425 then\n        mt.aoeIDUserBlacklist[49425] = \"Ahriman Sullen Gaze\"\n    elseif eventArgs.spellID == 49426 then\n        mt.aoeIDUserBlacklist[49426] = \"Ahriman Ireful Gaze\"\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+
+							{
+								"5d2a9c4f-9e1d-dda0-906e-8c028773aa0e",
+								true,
+							},
+						},
+						name = "Restore Gaze Blacklist",
+						uuid = "d5dc7799-026a-ff99-83bc-d5a0d38ab678",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.entityContentID == 14688\n    and (eventArgs.spellID == 49425 or eventArgs.spellID == 49426)",
+						dequeueIfLuaFalse = true,
+						name = "Ahriman Gaze Cast",
+						uuid = "5d2a9c4f-9e1d-dda0-906e-8c028773aa0e",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Ahriman Piece",
+			eventType = 2,
+			name = "Ahriman Gaze - Restore Moogle Blacklist",
+			timeout = 0,
+			uuid = "558181d6-bea6-60ac-8654-624bb275f43a",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "Argus.setActionAOEType(49424, 0, 0)\nArgus.setActionAOEType(49424, 1, 0)\nArgus.setActionAOEType(49425, 0, 0)\nArgus.setActionAOEType(49425, 1, 0)\nArgus.setActionAOEType(49426, 0, 0)\nArgus.setActionAOEType(49426, 1, 0)\n\n-- Blacklist the native Moogle telegraphs for both gaze actions.\nlocal mt = MoogleTelegraphs and MoogleTelegraphs.Settings\nif mt and mt.aoeIDUserBlacklist then\n    if not mt.aoeIDUserBlacklist[49424] then\n        mt.aoeIDUserBlacklist[49424] = \"Ahriman Double Vision\"\n    end\n    if not mt.aoeIDUserBlacklist[49425] then\n        mt.aoeIDUserBlacklist[49425] = \"Ahriman Sullen Gaze\"\n    end\n    if not mt.aoeIDUserBlacklist[49426] then\n        mt.aoeIDUserBlacklist[49426] = \"Ahriman Ireful Gaze\"\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+
+							{
+								"75173752-1a2e-3dfb-85a6-d6e8024fcaeb",
+								true,
+							},
+						},
+						name = "Hide Sullen and Ireful Gaze VFX",
+						uuid = "647d1540-3ca9-e249-8d30-72454804adbd",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.entityContentID == 14688",
+						dequeueIfLuaFalse = true,
+						name = "Ahriman Piece",
+						uuid = "75173752-1a2e-3dfb-85a6-d6e8024fcaeb",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Ahriman Piece",
+			eventType = 5,
+			name = "Ahriman Gaze - Hide Native VFX",
+			timeout = 0,
+			uuid = "97179f98-0136-5a03-8ac4-2e7c10f0e43a",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "AnyoneCore.BST.Settings.Resummon = false\nAnyoneCore.BST.RequestAction(\"partingBlow\")\nself.used = true",
+						conditions = 
+						{
+
+							{
+								"0f43b1cd-b737-b270-8467-200f5eaf8130",
+								true,
+							},
+
+							{
+								"93fedc7f-e709-1cc7-a45c-b052678a0864",
+								true,
+							},
+						},
+						name = "Disable Resummon and queue Parting Blow",
+						uuid = "3f52accb-e615-0bfc-8166-7a99a4ecef14",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 0,
+						eventSpellID = 49428,
+						name = "Curtains for Rank 5",
+						uuid = "0f43b1cd-b737-b270-8467-200f5eaf8130",
+						version = 3,
+					},
+				},
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 0,
+						eventEntityContentID = 14688,
+						name = "Ahriman Piece",
+						uuid = "93fedc7f-e709-1cc7-a45c-b052678a0864",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Ahriman Piece",
+			eventType = 3,
+			name = "Ahriman Curtains - Parting Blow",
+			uuid = "ac3d80d0-77b5-867b-ae3f-cc5066704ae5",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local waitMs = math.max(0, (eventArgs.channelTimeMax or 0) * 1000) + 2000\n\nif not self.restoreStartedAt then\n    self.restoreStartedAt = Now()\nend\n\nif TimeSince(self.restoreStartedAt) < waitMs then\n    return\nend\n\nAnyoneCore.BST.Settings.Resummon = true\nself.restoreStartedAt = nil\nself.used = true",
+						conditions = 
+						{
+
+							{
+								"c263a31f-21f2-52c3-91df-292ccde40c64",
+								true,
+							},
+
+							{
+								"9eda2559-1be5-b408-b842-185bdb8bd905",
+								true,
+							},
+						},
+						name = "Restore Resummon After Curtains",
+						uuid = "4c705e74-cdc3-e742-b482-92474172edee",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 0,
+						eventSpellID = 49428,
+						name = "Curtains for Rank 5",
+						uuid = "c263a31f-21f2-52c3-91df-292ccde40c64",
+						version = 3,
+					},
+				},
+
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 0,
+						eventEntityContentID = 14688,
+						name = "Ahriman Piece",
+						uuid = "9eda2559-1be5-b408-b842-185bdb8bd905",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Ahriman Piece",
+			eventType = 3,
+			name = "Ahriman Curtains - Restore Resummon",
+			timeout = 16,
+			uuid = "807bce71-bc4c-00a4-b77e-2b81cbab77f4",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if GUI:Begin(\"Battlehorn\") then\n    local ui = GUI:GetWindowFontSize()\n    local buttonWidth = ui * 8\n    local buttonHeight = ui * 1.8\n    local player = TensorCore.mGetPlayer()\n    local currentHorn = AnyoneCore.BST.GetBattlehorn(player)\n    local function hornButton(label, horn, actionID)\n        local active = currentHorn == horn\n        local action = ActionList:Get(1, actionID)\n        local usable = active or (action and action:IsReady(player))\n        local r, g, b = active and 0.20 or (usable and 0.80 or 0.35), active and 0.80 or (usable and 0.20 or 0.35), active and 0.20 or (usable and 0.20 or 0.35)\n        GUI:PushStyleColor(GUI.Col_Button, r, g, b, 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonHovered, math.min(r + 0.10, 1.0), math.min(g + 0.10, 1.0), math.min(b + 0.10, 1.0), 1.0)\n        GUI:PushStyleColor(GUI.Col_ButtonActive, math.min(r + 0.15, 1.0), math.min(g + 0.15, 1.0), math.min(b + 0.15, 1.0), 1.0)\n        local pressed = GUI:Button(label, buttonWidth, buttonHeight)\n        GUI:PopStyleColor(3)\n        if pressed and usable then\n            AnyoneCore.BST.Settings.Battlehorn = horn\n            if player and player.incombat and usable and not active then\n                AnyoneCore.BST.RequestAction(\"partingBlow\")\n            end\n        end\n    end\n    hornButton(\"Horn 1\", 1, 44881)\n    hornButton(\"Horn 2\", 2, 44892)\n    hornButton(\"Horn 3\", 3, 44894)\n    GUI:End()\nend",
+						conditions = 
+						{
+
+							{
+								"801275ce-d8fe-9062-9e4c-c59cb821622c",
+								true,
+							},
+						},
+						name = "Battlehorn Buttons",
+						uuid = "999b932f-eb64-4012-93ef-a0121a42d1b9",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return ACR.GetActiveProfile() == \"AnyoneBST\"",
+						name = "AnyoneBST Active ACR",
+						uuid = "801275ce-d8fe-9062-9e4c-c59cb821622c",
+						version = 3,
+					},
+				},
+			},
 			eventType = 13,
 			name = "Battlehorn HUD",
-			uuid = "8561a94f-5f8c-97c2-9942-82fb718885fa",
+			uuid = "040f5698-da5c-acdd-8461-8f353ff2ed99",
+			version = 2,
+		},
+	},
+	
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local enemy = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal place = ActionList:Get(11, 3)\nif enemy and place then\n    local pos = enemy.pos\n    if place:Cast(pos.x, pos.y, pos.z) then\n        self.used = true\n    end\nend",
+						conditions = 
+						{
+
+							{
+								"4e83db75-37eb-84f5-97e7-5f4157336bcc",
+								true,
+							},
+
+							{
+								"e993d17c-0345-c86d-8c44-686de426abad",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Place Nearest",
+						uuid = "1678695e-4e0a-dbe6-8760-99ddd9a08cc6",
+						version = 2.1,
+					},
+				},
+
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local place = ActionList:Get(11, 3)\nif place and place:Cast(100, 0, 100) then\n    self.used = true\nend",
+						conditions = 
+						{
+
+							{
+								"4e83db75-37eb-84f5-97e7-5f4157336bcc",
+								true,
+							},
+
+							{
+								"e993d17c-0345-c86d-8c44-686de426abad",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Fallback",
+						uuid = "30d69e53-8b22-7d8a-979c-f62656ef3338",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 0,
+						eventCountdownTime = 10,
+						name = "Countdown <=10s",
+						uuid = "4e83db75-37eb-84f5-97e7-5f4157336bcc",
+						version = 3,
+					},
+				},
+
+				{
+					data = 
+					{
+						category = "Filter",
+						filterTargetType = "Enemy",
+						name = "F - Nearest",
+						uuid = "e993d17c-0345-c86d-8c44-686de426abad",
+						version = 3,
+					},
+				},
+			},
+			eventType = 16,
+			name = "Place Pet Prepull",
+			timeout = 60,
+			uuid = "ffd7514a-b200-d75d-a32f-81cf4ffbea61",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+			},
+			conditions = 
+			{
+			},
+			execute = "local target = TensorCore.mGetTarget()\nif not target then return end\nlocal radius = target.hitradius + 3.5\nlocal color\nlocal opacity\nif target.distance >= radius then\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 0, 1)\n    opacity = 1\nelse\n    opacity = 0.5 * math.max(0, math.min((target.distance - (radius - 2)) / 2, 1))\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 1, opacity)\nend\nArgus.addCircleFilled(\n    target.pos.x, target.pos.y, target.pos.z,\n    radius, 50,\n    nil, color, 3,\n    nil, nil, nil, false,\n    Argus2.RenderFlags.FLAG_WARP_TERRAIN, 0\n)",
+			executeType = 0,
+			eventType = 12,
+			name = "Current Target Yellow Ring",
+			uuid = "a1f98da5-83fc-a64e-8bf3-6ab8e58a2d6d",
 			version = 2,
 		},
 	},
