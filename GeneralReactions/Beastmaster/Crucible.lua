@@ -2937,11 +2937,11 @@ local tbl =
 			conditions = 
 			{
 			},
-			execute = "local target = TensorCore.mGetTarget()\nif not target then return end\nlocal radius = target.hitradius + 3.5\nlocal color\nlocal opacity\nif target.distance >= radius then\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 0, 1)\n    opacity = 1\nelse\n    opacity = 0.5 * math.max(0, math.min((target.distance - (radius - 2)) / 2, 1))\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 1, opacity)\nend\nArgus.addCircleFilled(\n    target.pos.x, target.pos.y, target.pos.z,\n    radius, 50,\n    nil, color, 3,\n    nil, nil, nil, false,\n    Argus2.RenderFlags.FLAG_WARP_TERRAIN, 0\n)",
-			executeType = 0,
+			execute = "local target = TensorCore.mGetTarget()\nif not target then return end\n\nlocal radius = target.hitradius + 3.5\nlocal color\nlocal opacity\nif target.distance >= radius then\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 0, 1)\n    opacity = 1\nelse\n    opacity = 0.5 * math.max(0, math.min((target.distance - (radius - 2)) / 2, 1))\n    color = GUI:ColorConvertFloat4ToU32(1, 1, 1, opacity)\nend\nArgus.addCircleFilled(\n    target.pos.x, target.pos.y, target.pos.z,\n    radius, 50,\n    nil, color, 3,\n    nil, nil, nil, false,\n    Argus2.RenderFlags.FLAG_WARP_TERRAIN, 0\n)",
+			executeType = 2,
 			eventType = 12,
 			name = "Current Target Yellow Ring",
-			uuid = "a1f98da5-83fc-a64e-8bf3-6ab8e58a2d6d",
+			uuid = "8a6f448c-4845-36b5-9151-0014ed3eab9d",
 			version = 2,
 		},
 	},
