@@ -789,6 +789,418 @@ local tbl =
 			version = 2,
 		},
 	},
+
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal redDrawer = TensorCore.getCachedFlatDrawer(\n    0x000000FF,\n    nil,\n    0xFF0000FF,\n    nil,\n    0,\n    0,\n    flags.FLAG_WARP_TERRAIN\n)\nredDrawer:addTimedCenteredRect(4000, eventArgs.x, eventArgs.y, eventArgs.z, 5, 5, eventArgs.heading, 0, false, false, flags.FLAG_WARP_TERRAIN)\nredDrawer:addTimedCircle(7297, eventArgs.x, eventArgs.y, eventArgs.z, 12, 4000, false, false, flags.FLAG_WARP_TERRAIN)\n\nlocal x, z, marker = eventArgs.x, eventArgs.z, eventArgs.a5\nif marker == 4456451 and math.abs(x - 517.5) < 0.5 and math.abs(z + 430) < 0.5 then\n    local channel = 31\n    local drawY = eventArgs.y + 0.2\n    local delay, timeout = 4000, 7797\n    local baseDrawer = TensorCore.getStaticFlatDrawer(0x6000FF00, 1.5, channel, flags.FLAG_OCCLUSION_BASE)\n    local blockerDrawer = TensorCore.getStaticFlatDrawer(0, 0, channel, flags.FLAG_OCCLUDE)\n    baseDrawer:addTimedCenteredRect(timeout, 520, drawY, -420, 40, 20, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -412.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -422.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -417.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -427.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -397.875, 4.25, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    baseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -442.125, 4.25, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n    blockerDrawer:addTimedCircle(timeout, 522.5, drawY, -410, 12, delay, false, true, flags.FLAG_OCCLUDE)\n    blockerDrawer:addTimedCircle(timeout, 507.5, drawY, -412.5, 12, delay, false, true, flags.FLAG_OCCLUDE)\n    blockerDrawer:addTimedCircle(timeout, 532.5, drawY, -427.5, 12, delay, false, true, flags.FLAG_OCCLUDE)\n    blockerDrawer:addTimedCircle(timeout, 517.5, drawY, -430, 12, delay, false, true, flags.FLAG_OCCLUDE)\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"0f5de426-4d84-a2f1-aa40-0b5e2364feff",
+								true,
+							},
+							
+							{
+								"7884f449-59fc-322a-afb8-859ea3c22a04",
+								true,
+							},
+						},
+						name = "Draw Fetters Hazards & Safe Floor",
+						uuid = "580f448c-c3bf-2ebd-aef0-693def539975",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventArgType = 5,
+						eventIntValue = 2015453,
+						name = "Fetters Key",
+						uuid = "0f5de426-4d84-a2f1-aa40-0b5e2364feff",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 112 and TensorReactions_CurrentCombatTimer <= 130",
+						dequeueIfLuaFalse = true,
+						name = "Current Timer 112-130s",
+						uuid = "7884f449-59fc-322a-afb8-859ea3c22a04",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Deadly Demesne",
+			eventType = 29,
+			name = "Deadly Demesne 1 - Fetters",
+			uuid = "257dbe1b-c47c-a9fe-838f-b24fae0b2aee",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal x, z, marker = eventArgs.x, eventArgs.z, eventArgs.a5\nlocal delay, timeout\nlocal drawCross\n\nlocal groupDD2 =\n    (marker == 4325379 and math.abs(x - 520) < 0.5 and math.abs(z + 400) < 0.5)\n    or (marker == 4259843 and math.abs(x - 530) < 0.5 and math.abs(z + 420) < 0.5)\n    or (marker == 4194307 and math.abs(x - 510) < 0.5 and math.abs(z + 430) < 0.5)\n\nlocal groupDD3 =\n    (marker == 4390915 and math.abs(x - 510) < 0.5 and math.abs(z + 400) < 0.5)\n    or (marker == 4325379 and math.abs(x - 530) < 0.5 and math.abs(z + 420) < 0.5)\n    or (marker == 4259843 and math.abs(x - 510) < 0.5 and math.abs(z + 420) < 0.5)\n    or (marker == 4194307 and math.abs(x - 520) < 0.5 and math.abs(z + 440) < 0.5)\n\nif groupDD2 then\n    delay, timeout, drawCross = 0, 12547, false\nelseif groupDD3 then\n    delay, timeout, drawCross = 7938, 4500, true\nelse\n    self.used = true\n    return\nend\n\nlocal drawY = eventArgs.y + 0.2\n\nif groupDD2 then\n    -- 15% opaque red at draw start, reaching solid red at the end.\n    local redDrawer = TensorCore.getCachedFlatDrawer(\n        0x260000FF,\n        nil,\n        0xFF0000FF,\n        nil,\n        0,\n        0,\n        flags.FLAG_WARP_TERRAIN\n    )\n\n    redDrawer:addTimedCenteredRect(timeout, x, drawY, z, 10, 10, 0, delay, false, true, flags.FLAG_WARP_TERRAIN)\n    redDrawer:addTimedCenteredRect(timeout, x - 10, drawY, z, 10, 10, 0, delay, false, true, flags.FLAG_WARP_TERRAIN)\n    redDrawer:addTimedCenteredRect(timeout, x + 10, drawY, z, 10, 10, 0, delay, false, true, flags.FLAG_WARP_TERRAIN)\n    redDrawer:addTimedCenteredRect(timeout, x, drawY, z - 10, 10, 10, 0, delay, false, true, flags.FLAG_WARP_TERRAIN)\n    redDrawer:addTimedCenteredRect(timeout, x, drawY, z + 10, 10, 10, 0, delay, false, true, flags.FLAG_WARP_TERRAIN)\n\n    -- The same arena base as the DD3 group, with cutouts for all DD2\n    -- danger tiles. Draw the base once from this group's sentinel marker.\n    if marker == 4194307 and math.abs(x - 510) < 0.5 and math.abs(z + 430) < 0.5 then\n        local channel = 31\n        local baseDrawer = TensorCore.getStaticFlatDrawer(\n            0x6000FF00,\n            1.5,\n            channel,\n            flags.FLAG_OCCLUSION_BASE\n        )\n        local blockerDrawer = TensorCore.getStaticFlatDrawer(\n            0,\n            0,\n            channel,\n            flags.FLAG_OCCLUDE\n        )\n\n        baseDrawer:addTimedCenteredRect(timeout, 520, drawY, -420, 40, 20, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -412.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -422.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -417.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -427.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -397.875, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -442.125, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n\n        blockerDrawer:addTimedCenteredRect(timeout, 520, drawY, -400, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 510, drawY, -400, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 530, drawY, -400, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 520, drawY, -390, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 520, drawY, -410, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n\n        blockerDrawer:addTimedCenteredRect(timeout, 530, drawY, -420, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 520, drawY, -420, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 540, drawY, -420, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 530, drawY, -410, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 530, drawY, -430, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n\n        blockerDrawer:addTimedCenteredRect(timeout, 510, drawY, -430, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 500, drawY, -430, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 520, drawY, -430, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 510, drawY, -420, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCenteredRect(timeout, 510, drawY, -440, 10, 10, 0, 0, false, true, flags.FLAG_OCCLUDE)\n    end\nelse\n    -- Keep the transparent-to-solid red gradient on the DD3 crosses.\n    local redDrawer = TensorCore.getCachedFlatDrawer(\n        0x000000FF,\n        nil,\n        0xFF0000FF,\n        nil,\n        0,\n        0,\n        flags.FLAG_WARP_TERRAIN\n    )\n\n    redDrawer:addTimedCross(\n        timeout,\n        eventArgs.x,\n        drawY,\n        eventArgs.z,\n        15,\n        10,\n        eventArgs.heading,\n        delay,\n        false,\n        true,\n        flags.FLAG_WARP_TERRAIN\n    )\n\n    -- Build the arena floor mask once from the sentinel marker. The base\n    -- covers the 20-by-40 rectangle and six extended cubbies; blocker crosses\n    -- cut out the exact areas occupied by the delayed red danger crosses.\n    if marker == 4194307 and math.abs(x - 520) < 0.5 and math.abs(z + 440) < 0.5 then\n        local channel = 31\n        local baseDrawer = TensorCore.getStaticFlatDrawer(\n            0x6000FF00,\n            1.5,\n            channel,\n            flags.FLAG_OCCLUSION_BASE\n        )\n        local blockerDrawer = TensorCore.getStaticFlatDrawer(\n            0,\n            0,\n            channel,\n            flags.FLAG_OCCLUDE\n        )\n\n        baseDrawer:addTimedCenteredRect(12438, 520, drawY, -420, 40, 20, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 507.5, drawY, -412.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 507.5, drawY, -422.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 532.5, drawY, -417.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 532.5, drawY, -427.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 519.75, drawY, -397.875, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n        baseDrawer:addTimedCenteredRect(12438, 519.75, drawY, -442.125, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n\n        blockerDrawer:addTimedCross(12438, 510, drawY, -400, 15, 10, 1.571, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCross(12438, 530, drawY, -420, 15, 10, -1.571, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCross(12438, 510, drawY, -420, 15, 10, 3.142, 0, false, true, flags.FLAG_OCCLUDE)\n        blockerDrawer:addTimedCross(12438, 520, drawY, -440, 15, 10, -1.571, 0, false, true, flags.FLAG_OCCLUDE)\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"f7de44aa-c86d-9b34-bd11-740e93f97a7e",
+								true,
+							},
+							
+							{
+								"6569723d-1f7f-912a-bd9d-12b7186c02f5",
+								true,
+							},
+						},
+						name = "Draw Safe Floor + Danger Tiles",
+						uuid = "b4ac05a0-91aa-2fb1-8861-24a800a74bcc",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal x, z = eventArgs.x, eventArgs.z\nlocal drawY = eventArgs.y + 0.2\nlocal timeout = 18422\n\n-- Fade each 5-by-5 danger tile from transparent red to solid red.\nlocal redDrawer = TensorCore.getCachedFlatDrawer(\n    0x000000FF,\n    nil,\n    0xFF0000FF,\n    nil,\n    0,\n    0,\n    flags.FLAG_WARP_TERRAIN\n)\nredDrawer:addTimedCenteredRect(\n    timeout, x, drawY, z, 5, 5, 0, 0, false, true, flags.FLAG_WARP_TERRAIN\n)\n\n-- Cut the same tile out of the DD3 green floor mask.\nlocal blockerDrawer = TensorCore.getStaticFlatDrawer(\n    0,\n    0,\n    31,\n    flags.FLAG_OCCLUDE\n)\nblockerDrawer:addTimedCenteredRect(\n    timeout, x, drawY, z, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUDE\n)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"6f530a18-d6d8-00b9-9b3c-4e0640d2a7ce",
+								true,
+							},
+							
+							{
+								"9347b2df-c263-76f4-8010-5c3135583f86",
+								true,
+							},
+						},
+						name = "Red 5x5 Tiles",
+						uuid = "9bc31e54-6fa3-0261-8baf-9f14fdc0dce8",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal x, z = eventArgs.x, eventArgs.z\nlocal drawY = eventArgs.y + 0.2\nlocal timeout = 18422\n\n-- Fade each 5-by-5 danger tile from transparent red to solid red.\nlocal redDrawer = TensorCore.getCachedFlatDrawer(\n    0x000000FF,\n    nil,\n    0xFF0000FF,\n    nil,\n    0,\n    0,\n    flags.FLAG_WARP_TERRAIN\n)\nredDrawer:addTimedCenteredRect(\n    timeout, x, drawY, z, 5, 5, 0, 0, false, true, flags.FLAG_WARP_TERRAIN\n)\n\n-- Cut the same tile out of the DD3 green floor mask.\nlocal blockerDrawer = TensorCore.getStaticFlatDrawer(\n    0,\n    0,\n    31,\n    flags.FLAG_OCCLUDE\n)\nblockerDrawer:addTimedCenteredRect(\n    timeout, x, drawY, z, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUDE\n)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"6f530a18-d6d8-00b9-9b3c-4e0640d2a7ce",
+								true,
+							},
+							
+							{
+								"d24ad7d9-cda8-fe6c-9f18-c8aaefee295f",
+								true,
+							},
+						},
+						name = "Red 5x5 Tiles",
+						uuid = "a42fbdcf-65cc-9c4a-8670-6d4f77030087",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventArgType = 5,
+						eventIntValue = 2015428,
+						name = "Tile Key",
+						uuid = "f7de44aa-c86d-9b34-bd11-740e93f97a7e",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 2015428,
+						name = "Tile Entity",
+						uuid = "6569723d-1f7f-912a-bd9d-12b7186c02f5",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventArgType = 5,
+						eventIntValue = 2015453,
+						name = "Key 2015453",
+						uuid = "6f530a18-d6d8-00b9-9b3c-4e0640d2a7ce",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 274 and TensorReactions_CurrentCombatTimer <= 300",
+						dequeueIfLuaFalse = true,
+						name = "274-300s",
+						uuid = "9347b2df-c263-76f4-8010-5c3135583f86",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 360 and TensorReactions_CurrentCombatTimer <= 380",
+						dequeueIfLuaFalse = true,
+						name = "360-380s",
+						uuid = "d24ad7d9-cda8-fe6c-9f18-c8aaefee295f",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Deadly Demesne",
+			eventType = 29,
+			name = "Deadly Demesne 2 & 3 - Life Claim",
+			uuid = "eed7210d-6930-ebbf-a02e-0df7743e9edf",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal drawY = 0.2\nlocal timeout = 3026\nlocal delay = 2724\nlocal channel = 31\n\nlocal baseDrawer = TensorCore.getStaticFlatDrawer(\n    0x6000FF00,\n    1.5,\n    channel,\n    flags.FLAG_OCCLUSION_BASE\n)\nlocal blockerDrawer = TensorCore.getStaticFlatDrawer(\n    0,\n    0,\n    channel,\n    flags.FLAG_OCCLUDE\n)\n\n-- Main 20-by-40 arena rectangle and its six extended cubbies.\nbaseDrawer:addTimedCenteredRect(timeout, 520, drawY, -420, 40, 20, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -412.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -422.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -417.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -427.5, 5, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -397.875, 4.25, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -442.125, 4.25, 5, 0, delay, false, true, flags.FLAG_OCCLUSION_BASE)\n\n-- Remove the four radius-12 danger circles that resolve after this channel.\nblockerDrawer:addTimedCircle(timeout, 522.5, drawY, -410, 12, delay, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 520, drawY, -420, 12, delay, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 527.5, drawY, -430, 12, delay, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 512.5, drawY, -430, 12, delay, false, true, flags.FLAG_OCCLUDE)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"983aa6e3-fdee-2265-8064-cbc66c609021",
+								true,
+							},
+							
+							{
+								"479fb4dd-b0df-3cf7-ac7f-ea7f6a28ed95",
+								true,
+							},
+							
+							{
+								"b7f0d5db-8009-13b0-aa82-179494e36eec",
+								true,
+							},
+						},
+						name = "Draw Safe Floor After Molten Metal (1)",
+						uuid = "74290468-049d-1940-92e3-b49db2a527e5",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local flags = Argus2.RenderFlags\nlocal drawY = 0.2\nlocal timeout = 3026\nlocal delay = 2724\nlocal channel = 31\n\nlocal baseDrawer = TensorCore.getStaticFlatDrawer(\n    0x6000FF00,\n    1.5,\n    channel,\n    flags.FLAG_OCCLUSION_BASE\n)\nlocal blockerDrawer = TensorCore.getStaticFlatDrawer(\n    0,\n    0,\n    channel,\n    flags.FLAG_OCCLUDE\n)\n\n-- Main 20-by-40 arena rectangle and its six extended cubbies.\nbaseDrawer:addTimedCenteredRect(timeout, 520, drawY, -420, 40, 20, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -412.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 507.5, drawY, -422.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -417.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 532.5, drawY, -427.5, 5, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -397.875, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\nbaseDrawer:addTimedCenteredRect(timeout, 519.75, drawY, -442.125, 4.25, 5, 0, 0, false, true, flags.FLAG_OCCLUSION_BASE)\n\n-- Remove the four radius-12 danger circles that resolve after this channel.\nblockerDrawer:addTimedCircle(timeout, 522.5, drawY, -410, 12, 0, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 520, drawY, -420, 12, 0, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 527.5, drawY, -430, 12, 0, false, true, flags.FLAG_OCCLUDE)\nblockerDrawer:addTimedCircle(timeout, 512.5, drawY, -430, 12, 0, false, true, flags.FLAG_OCCLUDE)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"983aa6e3-fdee-2265-8064-cbc66c609021",
+								true,
+							},
+							
+							{
+								"479fb4dd-b0df-3cf7-ac7f-ea7f6a28ed95",
+								true,
+							},
+							
+							{
+								"f69523a2-1ba6-f1e9-bd42-e129e3b2ec9d",
+								true,
+							},
+						},
+						name = "Draw Safe Floor After Molten Metal (2)",
+						uuid = "ad986301-8f6d-6c5a-827e-ab4d56da5870",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14693,
+						name = "Lauda 14693",
+						uuid = "983aa6e3-fdee-2265-8064-cbc66c609021",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 49465,
+						name = "Molten Metal 49465",
+						uuid = "479fb4dd-b0df-3cf7-ac7f-ea7f6a28ed95",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 274 and TensorReactions_CurrentCombatTimer <= 292",
+						dequeueIfLuaFalse = true,
+						name = "Deadly Demesne 274-292s",
+						uuid = "b7f0d5db-8009-13b0-aa82-179494e36eec",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 360 and TensorReactions_CurrentCombatTimer <= 380",
+						dequeueIfLuaFalse = true,
+						name = "Deadly Demesne 360-380s",
+						uuid = "f69523a2-1ba6-f1e9-bd42-e129e3b2ec9d",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Deadly Demesne",
+			eventType = 2,
+			name = "Deadly Demesne 3 - Fetters",
+			uuid = "3a235280-9450-6491-98ef-c64cd5a4b679",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local timeout = 3000\n-- U32Color is packed as AABBGGRR: transparent red to opaque red.\nlocal drawer = TensorCore.getCachedFlatDrawer(\n    0x000000FF,\n    nil,\n    0xFF0000FF,\n    nil,\n    0,\n    0,\n    Argus2.RenderFlags.FLAG_WARP_TERRAIN\n)\n\ndrawer:addTimedCircle(timeout, eventArgs.x, eventArgs.y, eventArgs.z, eventArgs.aoeLength, 0, false, true)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"809b297b-a5f0-b3b8-aa7d-8b7c8785bb7d",
+								true,
+							},
+							
+							{
+								"53dc3003-2180-c001-822b-520fab9dfd18",
+								true,
+							},
+						},
+						name = "Draw Danger Circles",
+						uuid = "ca36dfce-852f-b6f4-9cd5-531b4aca5e98",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.aoeID == 49460 and eventArgs.contentID == 14693",
+						dequeueIfLuaFalse = true,
+						name = "Lauda AOE",
+						uuid = "809b297b-a5f0-b3b8-aa7d-8b7c8785bb7d",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorReactions_CurrentCombatTimer >= 275",
+						name = "Current Timer > 275s",
+						uuid = "53dc3003-2180-c001-822b-520fab9dfd18",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Deadly Demesne",
+			eventType = 18,
+			name = "Deadly Demesne 3 - Cage of Molten Metal",
+			uuid = "b4dc7b65-9086-c98e-9091-c8594a99961b",
+			version = 2,
+		},
+	},
+	
+
 	
 	{
 		data = 
@@ -1597,6 +2009,221 @@ local tbl =
 		},
 	},
 	
+
+	{
+		data = 
+		{
+			displayPath = "Draws",
+			name = "Morbol Piece",
+			uuid = "c8f3a1e2-4b5d-6e7f-8a9b-0c1d2e3f4a5b",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if (eventArgs.aoeID == 48675 or eventArgs.aoeID == 48673) and eventArgs.contentID == 14599 and eventArgs.aoeName == \"Extremely Bad Breath\" then\n    local drawer = TensorCore.getMoogleFlatDrawer()\n    drawer:addTimedRect(1000, eventArgs.x, eventArgs.y, eventArgs.z, eventArgs.aoeLength, 0.08, eventArgs.heading - math.pi / 4, 0, false, true)\n    drawer:addTimedRect(1000, eventArgs.x, eventArgs.y, eventArgs.z, eventArgs.aoeLength, 0.08, eventArgs.heading, 0, false, true)\n    drawer:addTimedRect(1000, eventArgs.x, eventArgs.y, eventArgs.z, eventArgs.aoeLength, 0.08, eventArgs.heading + math.pi / 4, 0, false, true)\nend",
+						conditions = 
+						{
+							
+							{
+								"d3bc556a-32cd-30a7-a818-959bbddf0520",
+								true,
+							},
+							
+							{
+								"e3d91f98-7758-ed59-89e2-8aa801eb63f5",
+								true,
+							},
+						},
+						endIfUsed = true,
+						name = "Draw Extremely Bad Breath Outline",
+						uuid = "306a4128-d810-0ee4-b34c-255efa936407",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							1340,
+							1341,
+							1342,
+							1343,
+						},
+						name = "First Master's Board",
+						uuid = "d3bc556a-32cd-30a7-a818-959bbddf0520",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						filterTargetType = "ContentID",
+						name = "Morbol Piece",
+						partyTargetContentID = 14599,
+						uuid = "e3d91f98-7758-ed59-89e2-8aa801eb63f5",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Morbol Piece",
+			eventType = 18,
+			name = "Extremely Bad Breath Cone",
+			uuid = "a1b6bfd3-a272-a069-8ed1-899bc7e6842d",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local rings = data.content14602Rings\nrings = rings or {}\ndata.content14602Rings = rings\nlocal old = rings[eventArgs.entityID]\nif old then Argus.deleteTimedShape(old) end\nlocal color = GUI:ColorConvertFloat4ToU32(1, 0, 0, 1)\nlocal drawer = TensorCore.getStaticDrawer(color)\nrings[eventArgs.entityID] = drawer:addTimedCircleOnEnt(86400000, eventArgs.entityID, 7, 0, false, true)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"333283c8-8927-b5e8-a8f4-8b8829628ae6",
+								true,
+							},
+							
+							{
+								"2c2fd3fc-b4b3-0dea-9316-9a303ec2a27f",
+								true,
+							},
+							
+							{
+								"530e8298-cf0e-88a7-b290-030cca13dcf8",
+								true,
+							},
+							
+							{
+								"256ba4df-8cbf-be7a-b31e-c120d7a8c885",
+								true,
+							},
+						},
+						name = "Draw Red 7y Ring",
+						uuid = "2845cca0-3c0e-3f97-8bab-04a7ed798037",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if eventArgs.isTargetable then return end\nlocal rings = data.content14602Rings\nif rings then\n local uuid = rings[eventArgs.entityID]\n if uuid then Argus.deleteTimedShape(uuid); rings[eventArgs.entityID] = nil end\nend\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"333283c8-8927-b5e8-a8f4-8b8829628ae6",
+								true,
+							},
+							
+							{
+								"2c2fd3fc-b4b3-0dea-9316-9a303ec2a27f",
+								true,
+							},
+						},
+						name = "Remove Draw on Death",
+						uuid = "db107dd3-0aeb-feda-a3be-435bf59be5cf",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							1340,
+							1341,
+							1342,
+							1343,
+						},
+						name = "Board 4",
+						uuid = "333283c8-8927-b5e8-a8f4-8b8829628ae6",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 7,
+						dequeueIfLuaFalse = true,
+						name = "In Combat",
+						uuid = "2c2fd3fc-b4b3-0dea-9316-9a303ec2a27f",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 3,
+						name = "Is Targetable",
+						uuid = "530e8298-cf0e-88a7-b290-030cca13dcf8",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14602,
+						name = "Carrion Broth",
+						uuid = "256ba4df-8cbf-be7a-b31e-c120d7a8c885",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Morbol Piece",
+			eventType = 26,
+			name = "Carrion Broth Aggro Range",
+			uuid = "cca8b8c7-2148-70ef-8295-818e8bc9f10b",
+			version = 2,
+		},
+	},
+	
 	{
 		data = 
 		{
@@ -1656,6 +2283,112 @@ local tbl =
 			version = 2,
 		},
 	},
+
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.ephemeral_blade_rush_warning = data.ephemeral_blade_rush_warning or {}\nlocal state = data.ephemeral_blade_rush_warning\nif state.drawer == nil then\n    state.drawer = TensorCore.getCachedDrawer(0x00000000, nil, 0xFF0000FF)\n    state.drawer:setGradient(0, 0, 0)\nend\nstate.drawer:addTimedRectOnEnt(2000, eventArgs.entityID, 50, 5, nil, 5730)\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"1067ce80-1a04-8288-a752-35fc89eca29f",
+								true,
+							},
+							
+							{
+								"1cadf32d-4144-6b4e-8baf-d3ac37ded90f",
+								true,
+							},
+							
+							{
+								"02a9c6a1-192f-ad93-9be1-289a78ebc765",
+								true,
+							},
+							
+							{
+								"e93606a8-9471-5055-8fd5-c259ea13482c",
+								true,
+							},
+						},
+						name = "Draw delayed red rush lane",
+						uuid = "26a993b4-555f-b2a3-acba-d7ff7db7e333",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 14696,
+						name = "Ephemeral Blade",
+						uuid = "1067ce80-1a04-8288-a752-35fc89eca29f",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventArgType = 3,
+						eventIntValue = 34,
+						name = "Animation 34",
+						uuid = "1cadf32d-4144-6b4e-8baf-d3ac37ded90f",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventArgType = 4,
+						eventIntValue = 4576,
+						name = "Animation 4576",
+						uuid = "02a9c6a1-192f-ad93-9be1-289a78ebc765",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isEntityAlive(14693, \"alive\")",
+						name = "Lauda Alive",
+						uuid = "e93606a8-9471-5055-8fd5-c259ea13482c",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws/Lauda the Spellcleaver",
+			eventType = 23,
+			execute = "local now = TensorReactions_CurrentCombatTimer\nif now < 35.469 or now >= 43.563 then\n    return\nend\n\nif not TensorCore.isEntityAlive(14693, \"alive\") then\n    return\nend\n\ndata.ephemeral_blade_rush_warning = data.ephemeral_blade_rush_warning or {}\nlocal state = data.ephemeral_blade_rush_warning\n\nif state.drawer == nil then\n    state.drawer = TensorCore.getCachedDrawer(0x00000000, nil, 0xFF0000FF)\n    state.drawer:setGradient(0, 0, 0)\nend\n\nlocal drawer = state.drawer\n\nif now >= 35.469 and now < 37.469 and not state.wave1 then\n    state.wave1 = true\n    drawer:addTimedRect(2000, 532.5, 0, -445.0, 50, 5, 0)\n    drawer:addTimedRect(2000, 527.5, 0, -445.0, 50, 5, 0)\n    drawer:addTimedRect(2000, 522.5, 0, -445.0, 50, 5, 0)\nend\n\nif now >= 37.516 and now < 39.516 and not state.wave2 then\n    state.wave2 = true\n    drawer:addTimedRect(2000, 505.0, 0, -402.5, 50, 5, 1.571)\n    drawer:addTimedRect(2000, 505.0, 0, -407.5, 50, 5, 1.571)\n    drawer:addTimedRect(2000, 505.0, 0, -412.5, 50, 5, 1.571)\n    drawer:addTimedRect(2000, 505.0, 0, -417.5, 50, 5, 1.571)\nend\n\nif now >= 39.563 and now < 41.563 and not state.wave3 then\n    state.wave3 = true\n    drawer:addTimedRect(2000, 517.5, 0, -445.0, 50, 5, 0)\n    drawer:addTimedRect(2000, 512.5, 0, -445.0, 50, 5, 0)\n    drawer:addTimedRect(2000, 507.5, 0, -445.0, 50, 5, 0)\nend\n\nif now >= 41.563 and now < 43.563 and not state.wave4 then\n    state.wave4 = true\n    drawer:addTimedRect(2000, 535.0, 0, -422.5, 50, 5, -1.571)\n    drawer:addTimedRect(2000, 535.0, 0, -427.5, 50, 5, -1.571)\n    drawer:addTimedRect(2000, 535.0, 0, -432.5, 50, 5, -1.571)\n    drawer:addTimedRect(2000, 535.0, 0, -437.5, 50, 5, -1.571)\nend",
+			name = "Vanishing Daggers early lane draws",
+			uuid = "b1313e35-abd2-d545-ad23-6d7b1925a1e3",
+			version = 3,
+		},
+	},
+	
+
 	
 	{
 		data = 
@@ -1677,7 +2410,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local buffs = TensorCore.getBuffs(Player)\nlocal assignmentName = nil\nlocal duration = 0\n\nfor _, buff in pairs(buffs) do\n    if buff.name == \"All Odds\"\n        or buff.name == \"All Evens\"\n        or buff.name == \"All Three\"\n        or buff.name == \"All Primes\" then\n        assignmentName = buff.name\n        duration = buff.duration or 0\n        break\n    end\nend\n\nif assignmentName == nil then\n    return\nend\n\nlocal value = eventArgs.entityContentID - 2015492\nlocal correct = false\n\nif assignmentName == \"All Odds\" then\n    correct = value % 2 == 1\nelseif assignmentName == \"All Evens\" then\n    correct = value % 2 == 0\nelseif assignmentName == \"All Three\" then\n    correct = value % 3 == 0\nelseif assignmentName == \"All Primes\" then\n    correct = value == 2 or value == 3 or value == 5 or value == 7\nend\n\nlocal color = correct and 0x8000FF00 or 0x800000FF\nlocal drawer = TensorCore.getStaticFlatDrawer(color, 1.5)\nlocal drawDuration = math.max(1, math.floor(duration * 1000))\ndrawer:addTimedCenteredRect(\n    drawDuration,\n    eventArgs.x,\n    eventArgs.y + 0.05,\n    eventArgs.z,\n    12,\n    12,\n    0,\n    0,\n    false,\n    true\n)\n\nself.used = true",
+						actionLua = "local buffs = TensorCore.getBuffs(Player)\nlocal assignmentName = nil\nlocal duration = 0\n\nfor _, buff in pairs(buffs) do\n    if buff.name == \"All Odds\"\n        or buff.name == \"All Evens\"\n        or buff.name == \"All Three\"\n        or buff.name == \"All Prime\" then\n        assignmentName = buff.name\n        duration = buff.duration or 0\n        break\n    end\nend\n\nif assignmentName == nil then\n    return\nend\n\nlocal value = eventArgs.entityContentID - 2015492\nlocal correct = false\n\nif assignmentName == \"All Odds\" then\n    correct = value % 2 == 1\nelseif assignmentName == \"All Evens\" then\n    correct = value % 2 == 0\nelseif assignmentName == \"All Three\" then\n    correct = value % 3 == 0\nelseif assignmentName == \"All Prime\" then\n    correct = value == 2 or value == 3 or value == 5 or value == 7\nend\n\nlocal color = correct and 0x8000FF00 or 0x800000FF\nlocal drawer = TensorCore.getStaticFlatDrawer(color, 1.5)\nlocal drawDuration = math.max(1, math.floor(duration * 1000))\ndrawer:addTimedCenteredRect(\n    drawDuration,\n    eventArgs.x,\n    eventArgs.y + 0.05,\n    eventArgs.z,\n    12,\n    12,\n    0,\n    0,\n    false,\n    true\n)\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -1731,7 +2464,7 @@ local tbl =
 			eventType = 29,
 			name = "Sphinx Assignment Tile Colours",
 			timeout = 20,
-			uuid = "8abc95af-f14b-a274-b813-49a387333814",
+			uuid = "7375495a-0234-6859-a10b-19aeeb599d44",
 			version = 2,
 		},
 	},
